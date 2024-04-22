@@ -13,27 +13,22 @@ class User(models.Model):
         blank=False,
         null=False
     )
-    invite_code = models.ForeignKey(  # Onetoonefield 
-        'InviteCode',
-        on_delete=models.CASCADE,
-        related_name='inv_code',
-        verbose_name='Код приглашения',
+    invite_code = models.CharField(
+        'Код',
         max_length=6,
+        unique=True,
         null=False,
-        blank=False
+        blank=True
     )
-    someone_invite_code = models.ForeignKey(
-        'InviteCode',
-        on_delete=models.SET_NULL,
-        related_name='some_inv_code',
-        verbose_name='Чужой инвайд код',
+    someone_invite_code = models.CharField(
+        'Код-приглашение от пользователя',
         max_length=6,
         null=True,
         blank=True
     )
     invited_users = models.ManyToManyField(
         'self',
-        blank=True,
+        through='InvitedUsers',
         verbose_name='Приглашенные пользователи'
     )
 
@@ -42,35 +37,22 @@ class User(models.Model):
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return self.phone_number
+        return f'{self.phone_number}'
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)  # Сохранить объект User
 
-    #     if not self.invite_code:
-    #         # Сгенерировать случайный код приглашения
-    #         chars = string.ascii_uppercase + string.digits
-    #         invite_code = ''.join(random.choice(chars) for i in range(6))
-
-    #         # Создать объект InviteCode и связать его с пользователем
-    #         InviteCode.objects.create(code=invite_code, user=self)
-        
-
-class InviteCode(models.Model):
-    # user = models.ForeignKey(  # Onetoonefield 
-    #     User,
-    #     on_delete=models.CASCADE,
-    #     related_name='code'
-    # )
-    code = models.CharField(
-        'Код',
-        max_length=6,
-        unique=True
+class InvitedUsers(models.Model):
+    user_who_invite = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='user_who_invite',
+        null=True
+    )
+    invited_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='invited_user',
+        null=True
     )
 
-    class Meta:
-        verbose_name = 'Инвайт код'
-        verbose_name_plural = 'Инвайт коды'
-
     def __str__(self):
-        return self.code
+        return f'Пользователь {self.user_who_invite.phone_number} пригласил {self.invited_user.phone_number}'
