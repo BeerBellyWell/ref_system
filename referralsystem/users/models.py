@@ -1,14 +1,10 @@
-import string
-import random
-
 from django.db import models
 
 
 class User(models.Model):
     """Класс пользователя"""
-    phone_number = models.CharField(
+    phone_number = models.IntegerField(
         verbose_name='Номер телефона',
-        max_length=11,
         unique=True,
         blank=False,
         null=False
@@ -54,5 +50,10 @@ class InvitedUsers(models.Model):
         null=True
     )
 
+    class Meta:
+        verbose_name = 'Приглашенный пользователь'
+        verbose_name_plural = 'приглашенные пользователи'
+
     def __str__(self):
-        return f'Пользователь {self.user_who_invite.phone_number} пригласил {self.invited_user.phone_number}'
+        return (f'Пользователь {self.user_who_invite.phone_number} '
+                f'пригласил {self.invited_user.phone_number}')
