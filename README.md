@@ -1,5 +1,5 @@
 # Ref_system
->Реферальную система
+>Реферальная система
 
 Стек:Django, DRF, postgreSQL
 
