@@ -7,7 +7,7 @@
 
 + клонируем репозиторий `git clone`
 `git@github.com:BeerBellyWell/ref_system.git`
-+ переходим в него `cd ref_system`
++ переходим в него `cd ref_system/`
     + разворачиваем виртуальное окружение
     `python3 -m venv env` (Windows: `python -m venv env`)
     + активируем его
