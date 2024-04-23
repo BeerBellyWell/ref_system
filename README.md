@@ -6,7 +6,7 @@
 #### Как запустить проект:
 
 + клонируем репозиторий `git clone`
-`https://github.com/git@github.com:BeerBellyWell/Hammer_systems.git`
+`git@github.com:BeerBellyWell/ref_system.git`
 + переходим в него `cd Hammer_systems`
     + разворачиваем виртуальное окружение
     `python3 -m venv env` (Windows: `python -m venv env`)
